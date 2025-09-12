@@ -59,8 +59,22 @@
     transition: opacity 0.2s ease;
   }
 
-  html,body{margin:0;height:100%;background:linear-gradient(180deg,var(--bg),#071024 140%);color:#cbd9ee;}
-  .container{max-width:1100px;margin:28px auto;padding:24px;}
+  #content {
+    flex: 1;                 /* nimmt restliche Höhe ein */
+    overflow-y: auto;        /* erlaubt Scrollen */
+    /*padding-right: 8px;      /* optional: etwas Platz rechts */
+    scrollbar-width: none;
+    padding-bottom: 40px;
+  }
+
+  .desc {
+    white-space: pre-line; /* wandelt \n in Zeilenumbruch um */
+  }
+
+
+
+  html,body{margin:0;height:100%;background:linear-gradient(180deg,var(--bg),#071024 140%);color:#cbd9ee;overflow: hidden;}
+  .container{max-width:1100px;margin:28px auto;padding:24px;display: flex;flex-direction: column;height: 100%;}
   header{display:flex;gap:16px;align-items:center;margin-bottom:18px;}
   .logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,#06223c,#0b3b63);box-shadow:0 6px 16px rgba(5,20,40,0.6);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--accent);font-size:20px;}
   h1{margin:0;font-size:20px;color:#e7f1ff;}
@@ -803,7 +817,7 @@ function parseMarkdown(md){
       current={title:line.replace(/^##\s?/,'').trim(),items:[]};
     }else if(line===''||line.startsWith('<!--')){continue;}
     else{
-      if(line.startsWith('#')){current.desc=(current.desc?current.desc+' ':'')+line.replace(/^#\s?/,'').trim();continue;}
+      if(line.startsWith('#')){current.desc=(current.desc?current.desc+'\n':'')+line.replace(/^#\s?/,'').trim();continue;}
       let cmd=line,desc='';const idx=line.indexOf('#');
       if(idx!==-1){cmd=line.slice(0,idx).trim();desc=line.slice(idx+1).trim();}
       if(cmd==='')continue;
